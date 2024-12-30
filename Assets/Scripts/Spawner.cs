@@ -1,0 +1,84 @@
+using Sirenix.OdinInspector;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine;
+using UnityEngine.Experimental.AI;
+
+
+public class Spawner : MonoBehaviour
+{
+    
+    [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
+    [SerializeField] private List<GameObject> _obstaclePrefabs;
+    private WaitForSeconds _wait = new WaitForSeconds(3f);
+    private Coroutine _spawnRoutine;
+  
+    
+
+    private void Start()
+    {
+        StartSpawnRoutine();
+        
+    }
+    //private void StopSpawnRoutine()
+    //{
+    //    if(_spawnRoutine != null)
+    //    {
+    //        StopCoroutine(_spawnRoutine);
+    //        _spawnRoutine = null;
+    //    }
+    //}
+    private void StartSpawnRoutine()
+    {
+        if(_spawnRoutine == null)
+        {
+            _spawnRoutine = StartCoroutine(SpawnRoutine());
+        }
+    }
+    
+    private IEnumerator SpawnRoutine()
+     {
+         while (true)
+         {
+            SpawnObstacle();
+
+            yield return _wait;
+         }
+      }
+    private void SpawnObstacle()
+    {
+
+        int randomIndex = GetRandomPrefabIndex();
+       // int randomIndex = UnityEngine.Random.Range(0, _obstaclePrefabs.Count);
+        GameObject gameObject = Instantiate(_obstaclePrefabs[randomIndex]);
+
+        Obstacle obstacle = gameObject.GetComponent<Obstacle>();
+        obstacle.OnInVisible += OnInVisible;  // evente bir method tanýmladým
+        obstacles.Add(obstacle);  // daha sonra onu listeye ekledim
+            
+    }
+
+    private void OnInVisible(Obstacle arg0)
+    {
+        obstacles.Remove(arg0);    // paramtle ile gelenleri siliyor listeden 
+        arg0.OnInVisible -= OnInVisible;  // eventi kaydýný artýk siliyoruz 
+        Destroy(arg0.gameObject);  // objeleri yok ediyooruz
+    }
+
+    private int GetRandomPrefabIndex()
+    {
+        if (GameManager.Instance.GameSpeed >= 5 && GameManager.Instance.GameSpeed <= 7)
+        {
+            // Ýlk 4 prefab arasýndan rastgele seçim yap
+            return UnityEngine.Random.Range(0,1);
+        }
+        else
+        {
+            // Tüm prefab'lar arasýndan rastgele seçim yap
+            return UnityEngine.Random.Range(0, _obstaclePrefabs.Count);
+        }
+    }
+
+}
