@@ -69,10 +69,10 @@ public class Spawner : MonoBehaviour
 
     private int GetRandomPrefabIndex()
     {
-        if (GameManager.Instance.GameSpeed >= 5 && GameManager.Instance.GameSpeed <= 7)
+        if (GameManager.Instance.GameSpeed >= 5 && GameManager.Instance.GameSpeed <= 8)
         {
             // Ýlk 4 prefab arasýndan rastgele seçim yap
-            return UnityEngine.Random.Range(0,1);
+            return UnityEngine.Random.Range(0,2);
         }
         else
         {

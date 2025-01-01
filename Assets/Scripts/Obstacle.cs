@@ -10,8 +10,8 @@ public class Obstacle : MonoBehaviour
 {
     public event UnityAction<Obstacle> OnInVisible; // Internel Event her obstacle classý için ayrý  ve Instance üzerinden oluþuluyor 
     private float _leftEdge;
-    
 
+   
     private void OnBecameInvisible()
     {
         OnInVisible?.Invoke(this);
