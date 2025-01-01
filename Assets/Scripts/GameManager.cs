@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         _player.gameObject.SetActive(false);
 
        _scoreManager._gameOverPanel.gameObject.SetActive(true);
+        
         _retyButton.gameObject.SetActive(true);
 
     }
