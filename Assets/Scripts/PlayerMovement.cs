@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        isBending();
         if (_isGrounded)
         {
             Jump();
@@ -47,17 +47,16 @@ public class PlayerMovement : MonoBehaviour
         }
        
 
-        isBending();
-        
     }
 
     private void FixedUpdate()
     {
+
         if (_isJumping)
         {
-            _rb.gravityScale = 8;
+            _rb.gravityScale = 7f;
         }
-        
+
     }
 
     private void isBending()

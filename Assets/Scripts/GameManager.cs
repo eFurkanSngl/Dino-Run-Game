@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance{ get; private set; }  // Singelton Instance
     public float InitialGameSpeed => _initialGameSpeed;  // Getter 
     public float GameSpeed => _gameSpeed;
+    public float GameSpeedIncrease => _gameSpeedIncrease;
 
     [SerializeField] private float _initialGameSpeed = 5f; // Start Speed
     [SerializeField] private float _gameSpeed;
@@ -75,16 +76,13 @@ public class GameManager : MonoBehaviour
         foreach (var obstacle in _obstacle)
             Destroy(obstacle);
 
-       
-
         _gameSpeed = 0;
         _gameSpeedIncrease = 0;
 
         _spawner.gameObject.SetActive(false);
         _player.gameObject.SetActive(false);
 
-       _scoreManager._gameOverPanel.gameObject.SetActive(true);
-        
+        _scoreManager._gameOverPanel.gameObject.SetActive(true);
         _retyButton.gameObject.SetActive(true);
 
     }
