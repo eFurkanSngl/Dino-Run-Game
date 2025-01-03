@@ -32,7 +32,7 @@ public class ScoreManager : MonoBehaviour
     private void IncreaseScore()
     {
         //_score += _scoreIncrement * Time.deltaTime;
-        _score += GameManager.Instance.GameSpeed * Time.deltaTime;
+        _score += GameManager.Instance.GameSpeed / 0.5f;
     }
 
     private void ResetScore()
