@@ -168,8 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ccfa73cb6c674645970e6dfd2121a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  startPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &73931730
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -267,8 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ccfa73cb6c674645970e6dfd2121a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  startPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &151394442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -500,8 +496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ccfa73cb6c674645970e6dfd2121a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  startPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &586069255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -669,6 +663,7 @@ GameObject:
   - component: {fileID: 1139114136}
   - component: {fileID: 1139114135}
   - component: {fileID: 1139114134}
+  - component: {fileID: 1139114137}
   m_Layer: 0
   m_Name: NewGameBTN
   m_TagString: Untagged
@@ -778,6 +773,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139114132}
   m_CullTransparentMesh: 1
+--- !u!114 &1139114137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139114132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce55a53fb574f484a89deeed3ec17849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1139114134}
 --- !u!1 &1235747226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,8 +1707,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ccfa73cb6c674645970e6dfd2121a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  startPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &2068551678
 SpriteRenderer:
   m_ObjectHideFlags: 0

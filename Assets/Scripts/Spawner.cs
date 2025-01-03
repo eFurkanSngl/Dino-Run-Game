@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
 
     private float _currentSpawnDelay;
     private float _minSpawnDelay = 0.2f;
-    private float _spawnSpeedIncrease = 0.2f;
+    private float _spawnSpeedIncrease = 0.25f;
     private float _initialSpawnDelay = 3f;
   
     
@@ -50,16 +50,16 @@ public class Spawner : MonoBehaviour
      {
          while (true)
          {
+          
+            yield return _wait;
             SpawnObstacle();
 
-            yield return _wait;
+            if (_currentSpawnDelay > _minSpawnDelay)
+            {
+                _currentSpawnDelay -= _spawnSpeedIncrease;
+            }
 
-            //if(_currentSpawnDelay > _minSpawnDelay)
-            //{
-            //    _currentSpawnDelay -= _spawnSpeedIncrease;
-            //}
-            
-         }
+        }
       }
     private void SpawnObstacle()
     {
