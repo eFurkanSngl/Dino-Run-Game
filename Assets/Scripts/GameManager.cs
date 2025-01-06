@@ -74,7 +74,10 @@ public class GameManager : MonoBehaviour
         Obstacle[] _obstacle = FindObjectsOfType<Obstacle>();
 
         foreach (var obstacle in _obstacle)
+        {
             Destroy(obstacle);
+
+        }
 
         _gameSpeed = 0;
         _gameSpeedIncrease = 0;

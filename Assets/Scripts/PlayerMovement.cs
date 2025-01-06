@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rb;
    [SerializeField]private float _jumpForce = 9f;
-    private Vector2 _startPos;
+   // private Vector2 _startPos;
     private bool _isGrounded;
     [SerializeField] private Animator _anim;
     private bool _isJumping = false;
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isJumping)
         {
-            _rb.gravityScale = 7f;
+            _rb.gravityScale = 5f;
         }
 
     }

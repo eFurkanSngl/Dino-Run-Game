@@ -11,5 +11,6 @@ namespace Assets.Scripts.Events
     public class UIEvents:MonoBehaviour
     {
         public static UnityAction UIHandler;
+
     }
 }

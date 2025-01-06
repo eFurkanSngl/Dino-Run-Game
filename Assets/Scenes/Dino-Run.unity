@@ -156,9 +156,9 @@ MonoBehaviour:
   _obstaclePrefabs:
   - {fileID: 7370401943919013166, guid: 189fe0c99c2aae2408bf2e5af40f0e08, type: 3}
   - {fileID: 7284855725505888119, guid: ef5743009281f284382bdda53b110dcc, type: 3}
+  - {fileID: 2439987084838650171, guid: 9892329cedf152a4ba812f8fe0fd2764, type: 3}
   - {fileID: 3056226152156128090, guid: 445d65268fbf0464583ad0bf5c012fed, type: 3}
   - {fileID: 3082003647506423849, guid: a1e7b0b7e62b8e8408f6c70ed08cd5fc, type: 3}
-  - {fileID: 2439987084838650171, guid: 9892329cedf152a4ba812f8fe0fd2764, type: 3}
 --- !u!4 &37509068
 Transform:
   m_ObjectHideFlags: 0
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f6f54e2d48f8b469179162d887d96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpForce: 40
+  _jumpForce: 30
   _anim: {fileID: 579150458}
 --- !u!1 &584632882
 GameObject:

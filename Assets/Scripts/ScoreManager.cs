@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI _gameOverPanel;
     public TextMeshProUGUI _scoreText;
     private float _score = 0;
-    private float _scoreIncrement = 3f;
+    //private float _scoreIncrement = 3f;
    
   
     public float Score => _score;
@@ -32,7 +32,7 @@ public class ScoreManager : MonoBehaviour
     private void IncreaseScore()
     {
         //_score += _scoreIncrement * Time.deltaTime;
-        _score += GameManager.Instance.GameSpeed / 0.5f;
+        _score += (GameManager.Instance.GameSpeed / 2f) * Time.deltaTime;
     }
 
     private void ResetScore()

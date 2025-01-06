@@ -13,20 +13,19 @@ public class Spawner : MonoBehaviour
     
     [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
     [SerializeField] private List<GameObject> _obstaclePrefabs;
-    private WaitForSeconds _wait = new WaitForSeconds(0.5f);
+    private WaitForSeconds _wait;
     private Coroutine _spawnRoutine;
 
     private float _currentSpawnDelay;
-    private float _minSpawnDelay = 0.2f;
-    private float _spawnSpeedIncrease = 0.25f;
-    private float _initialSpawnDelay = 3f;
+    private float _minSpawnDelay = 0.75f;
+    private float _spawnSpeedIncrease = 0.15f;
+    private float _initialSpawnDelay = 5f;
   
     
 
     private void Start()
     {
         _currentSpawnDelay = _initialSpawnDelay;
-        _wait = new WaitForSeconds(_currentSpawnDelay);
         StartSpawnRoutine();
         
     }
@@ -50,17 +49,20 @@ public class Spawner : MonoBehaviour
      {
          while (true)
          {
-          
-            yield return _wait;
-            SpawnObstacle();
-
+           
             if (_currentSpawnDelay > _minSpawnDelay)
             {
                 _currentSpawnDelay -= _spawnSpeedIncrease;
             }
 
-        }
-      }
+            SpawnObstacle();
+            _wait = new WaitForSeconds(_currentSpawnDelay);
+
+
+            yield return _wait;
+         }
+     }
+
     private void SpawnObstacle()
     {
 
@@ -84,15 +86,15 @@ public class Spawner : MonoBehaviour
 
     private int GetRandomPrefabIndex()
     {
-        if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <= 8)
+        if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <=8)
         {
             // Ýlk 4 prefab arasýndan rastgele seçim yap
-            return UnityEngine.Random.Range(0,2);
+            return UnityEngine.Random.Range(0,1+1);
         }
         else 
         {
             // Tüm prefab'lar arasýndan rastgele seçim yap
-            return UnityEngine.Random.Range(0, _obstaclePrefabs.Count);
+            return UnityEngine.Random.Range(0, _obstaclePrefabs.Count+1);
         }
     }
 
