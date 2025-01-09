@@ -12,7 +12,7 @@ namespace Assets.Scripts.Events
     {
         public static UnityAction OnNewGame;  // Obsver Pattern
         // NewGame bir olay buna dışardan kayıt olanların işlemlerini hepsini dinlemesine observer pattern deriz
-        
+        public static UnityAction OnRestart;
        
     }
 }

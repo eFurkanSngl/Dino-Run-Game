@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class NewGameBTN : UIBTN
 {
+    [SerializeField] private GameObject _levelScene;
     protected override void OnClick()
     {
-        LoadMainScene();
+        LevelSceneActive();
         MainMenuEvents.NewGameBTN?.Invoke();
     }
 
-    private void LoadMainScene()
+    private void LevelSceneActive()
     {
-        SceneManager.LoadScene("Dino-Run");
+        _levelScene.SetActive(true);
     }
 }

@@ -1,3 +1,4 @@
+using Assets.Scripts.Events;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -11,15 +12,16 @@ using UnityEngine.Experimental.AI;
 public class Spawner : MonoBehaviour
 {
     
-    [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
+   [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
     [SerializeField] private List<GameObject> _obstaclePrefabs;
     private WaitForSeconds _wait;
     private Coroutine _spawnRoutine;
 
     private float _currentSpawnDelay;
-    private float _minSpawnDelay = 0.75f;
-    private float _spawnSpeedIncrease = 0.15f;
+    private float _minSpawnDelay = 1f;
+    private float _spawnSpeedIncrease = 0.10f;
     private float _initialSpawnDelay = 5f;
+    private bool _isRestart = false;
   
     
 
@@ -37,14 +39,28 @@ public class Spawner : MonoBehaviour
     //        _spawnRoutine = null;
     //    }
     //}
-    private void StartSpawnRoutine()
+    public  void StartSpawnRoutine()
     {
         if(_spawnRoutine == null)
         {
             _spawnRoutine = StartCoroutine(SpawnRoutine());
         }
     }
-    
+    private void OnRestartSpawnDelay()
+    {
+            _currentSpawnDelay = _initialSpawnDelay;
+        
+    }
+    private void OnEnable()
+    {
+        GameEvents.OnRestart += OnRestartSpawnDelay;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnRestart -= OnRestartSpawnDelay;
+    }
+
     private IEnumerator SpawnRoutine()
      {
          while (true)
@@ -63,7 +79,7 @@ public class Spawner : MonoBehaviour
          }
      }
 
-    private void SpawnObstacle()
+    public void SpawnObstacle()
     {
 
         int randomIndex = GetRandomPrefabIndex();
@@ -89,12 +105,12 @@ public class Spawner : MonoBehaviour
         if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <=8)
         {
             // Ýlk 4 prefab arasýndan rastgele seçim yap
-            return UnityEngine.Random.Range(0,1+1);
+            return UnityEngine.Random.Range(0,2);
         }
         else 
         {
             // Tüm prefab'lar arasýndan rastgele seçim yap
-            return UnityEngine.Random.Range(0, _obstaclePrefabs.Count+1);
+            return UnityEngine.Random.Range(0, _obstaclePrefabs.Count);
         }
     }
 

@@ -22,21 +22,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _gameSpeedIncrease = 0.2f;  // Increase Speed
     private PlayerMovement _player;
     private Spawner _spawner;
-    private Ground _ground;
-    private ScoreManager _scoreManager;
-    private RetyButton _retyButton;
-   
+    [SerializeField] private GameObject _gameOverPanel;
+    
+
     private void Awake()  // Singelton Algortim
     {
         //MethodBase.GetCurrentMethod().Name;    // Hangi metod olduðumuzu gösterir.
        
         Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
-
-       _player = FindObjectOfType<PlayerMovement>();
-        _spawner = FindObjectOfType<Spawner>();
-        _scoreManager = FindObjectOfType<ScoreManager>();
-        _retyButton = FindObjectOfType<RetyButton>();
-
 
         if (Instance)
         {
@@ -52,64 +45,88 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
+        _player = FindObjectOfType<PlayerMovement>();
+        _spawner = FindObjectOfType<Spawner>();
+     
         NewGame();
     }
 
-    private void NewGame()
+    public void NewGame()
     {
-        
-        _gameSpeed = _initialGameSpeed;   // Start game speed = InitialGameSpeed
+        Obstacle[] obstacles = FindObjectsOfType<Obstacle>();
 
-        _spawner.gameObject.SetActive(true);
-        _player.gameObject.SetActive(true);
-
-        _player.transform.position = new Vector2(x: -15, y: -5.1f);
-
-        _scoreManager._gameOverPanel.gameObject.SetActive( false);
-        _retyButton.gameObject.SetActive(false);
-    }
-
-    public void GameOver()
-    {
-        Obstacle[] _obstacle = FindObjectsOfType<Obstacle>();
-
-        foreach (var obstacle in _obstacle)
+        foreach (var obstacle in obstacles)
         {
-            Destroy(obstacle);
-
+            Destroy(obstacle.gameObject);
         }
 
+
+        Time.timeScale = 1f;
+        _gameSpeed = _initialGameSpeed;   // Start game speed = InitialGameSpeed
+        
+        _spawner.gameObject.SetActive(true);
+        _player.gameObject.SetActive(true);
+        _gameOverPanel.SetActive(false);
+
+        ScoreManagerEvents.ScoreEventsDisable?.Invoke();
+        
+    }
+
+    
+    public void GameOver()
+    {
+        
         _gameSpeed = 0;
         _gameSpeedIncrease = 0;
+        
 
         _spawner.gameObject.SetActive(false);
+       
         _player.gameObject.SetActive(false);
 
-        _scoreManager._gameOverPanel.gameObject.SetActive(true);
-        _retyButton.gameObject.SetActive(true);
+        ScoreManagerEvents.ScoreEventsEnable?.Invoke();
+       _gameOverPanel.SetActive(true);
 
+     
     }
 
     private void OnEnable()
     {
         GameEvents.OnNewGame += NewGame;
+
         PlayerMovement.OnGameOver += GameOver;
-        UIEvents.UIHandler += NewGame;
+
+        UIEvents.UIHandlerUpdate += NewGame;
+
+        UIEvents.UIHandleIncrease += NewGame;
+
+        
     }
 
     private void OnDisable()
     {
+         GameEvents.OnNewGame -= NewGame;
+
         PlayerMovement.OnGameOver -= GameOver;
-        UIEvents.UIHandler -= NewGame;
-        GameEvents.OnNewGame -= NewGame;
+
+        UIEvents.UIHandlerUpdate -= NewGame;
+
+        UIEvents.UIHandleIncrease -= NewGame;
+
+       
     }
 
+    private void IncreaseGameSpeed()
+    {
+        _gameSpeed += _gameSpeedIncrease * Time.deltaTime;  // Current Speed = Increase Speed
 
+    }
 
     // Update is called once per frame
     void Update()
     {
-        _gameSpeed += _gameSpeedIncrease * Time.deltaTime;  // Current Speed = Increase Speed
+        IncreaseGameSpeed();
     }
 
 
