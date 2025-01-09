@@ -1,3 +1,4 @@
+using Assets.Scripts.Events;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -11,22 +12,22 @@ using UnityEngine.Experimental.AI;
 public class Spawner : MonoBehaviour
 {
     
-    [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
+   [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
     [SerializeField] private List<GameObject> _obstaclePrefabs;
-    private WaitForSeconds _wait = new WaitForSeconds(0.5f);
+    private WaitForSeconds _wait;
     private Coroutine _spawnRoutine;
 
     private float _currentSpawnDelay;
-    private float _minSpawnDelay = 0.2f;
-    private float _spawnSpeedIncrease = 0.25f;
-    private float _initialSpawnDelay = 3f;
+    private float _minSpawnDelay = 1f;
+    private float _spawnSpeedIncrease = 0.10f;
+    private float _initialSpawnDelay = 5f;
+    private bool _isRestart = false;
   
     
 
     private void Start()
     {
         _currentSpawnDelay = _initialSpawnDelay;
-        _wait = new WaitForSeconds(_currentSpawnDelay);
         StartSpawnRoutine();
         
     }
@@ -38,30 +39,47 @@ public class Spawner : MonoBehaviour
     //        _spawnRoutine = null;
     //    }
     //}
-    private void StartSpawnRoutine()
+    public  void StartSpawnRoutine()
     {
         if(_spawnRoutine == null)
         {
             _spawnRoutine = StartCoroutine(SpawnRoutine());
         }
     }
-    
+    private void OnRestartSpawnDelay()
+    {
+            _currentSpawnDelay = _initialSpawnDelay;
+        
+    }
+    private void OnEnable()
+    {
+        GameEvents.OnRestart += OnRestartSpawnDelay;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnRestart -= OnRestartSpawnDelay;
+    }
+
     private IEnumerator SpawnRoutine()
      {
          while (true)
          {
-          
-            yield return _wait;
-            SpawnObstacle();
-
+           
             if (_currentSpawnDelay > _minSpawnDelay)
             {
                 _currentSpawnDelay -= _spawnSpeedIncrease;
             }
 
-        }
-      }
-    private void SpawnObstacle()
+            SpawnObstacle();
+            _wait = new WaitForSeconds(_currentSpawnDelay);
+
+
+            yield return _wait;
+         }
+     }
+
+    public void SpawnObstacle()
     {
 
         int randomIndex = GetRandomPrefabIndex();
@@ -84,7 +102,7 @@ public class Spawner : MonoBehaviour
 
     private int GetRandomPrefabIndex()
     {
-        if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <= 8)
+        if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <=8)
         {
             // Ýlk 4 prefab arasýndan rastgele seçim yap
             return UnityEngine.Random.Range(0,2);

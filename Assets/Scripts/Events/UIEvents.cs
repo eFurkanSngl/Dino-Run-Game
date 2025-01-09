@@ -10,6 +10,8 @@ namespace Assets.Scripts.Events
 {
     public class UIEvents:MonoBehaviour
     {
-        public static UnityAction UIHandler;
+        public static UnityAction UIHandlerUpdate;
+        public static UnityAction UIHandleIncrease;
+
     }
 }

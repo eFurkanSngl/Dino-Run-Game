@@ -14,6 +14,7 @@ namespace Assets.Scripts.Events
         public static UnityAction NewGameBTN;
         public static UnityAction SettingsBTN;
         public static UnityAction HighScoreBTN;
+        public static UnityAction ExitBTN;
     }
 }
 // observer pattern

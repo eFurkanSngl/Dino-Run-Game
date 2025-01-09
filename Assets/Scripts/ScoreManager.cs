@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -11,8 +13,8 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI _gameOverPanel;
     public TextMeshProUGUI _scoreText;
     private float _score = 0;
-    private float _scoreIncrement = 3f;
-   
+    //private float _scoreIncrement = 3f;
+
   
     public float Score => _score;
     private void UpdateScoreText()
@@ -32,7 +34,7 @@ public class ScoreManager : MonoBehaviour
     private void IncreaseScore()
     {
         //_score += _scoreIncrement * Time.deltaTime;
-        _score += GameManager.Instance.GameSpeed / 0.5f;
+        _score += (GameManager.Instance.GameSpeed / 2f) * Time.deltaTime;
     }
 
     private void ResetScore()
@@ -41,22 +43,47 @@ public class ScoreManager : MonoBehaviour
         _scoreText.text = _score.ToString();
     }
 
+    private void GameOverPanelEnable() => _gameOverPanel.gameObject.SetActive(true);
+    private void GameOverPanelDisable() => _gameOverPanel.gameObject.SetActive(false);
 
     private void OnEnable()
     {
+        ScoreManagerEvents.ScoreEventsEnable += GameOverPanelEnable;
+        ScoreManagerEvents.ScoreEventsDisable += GameOverPanelDisable;
+
         GameEvents.OnNewGame += ResetScore;
 
-        UIEvents.UIHandler += UpdateScoreText;
-        UIEvents.UIHandler += IncreaseScore;
+        UIEvents.UIHandlerUpdate += UpdateScoreText;
+        UIEvents.UIHandleIncrease += IncreaseScore;
     }
 
     private void OnDisable()
     {
+        ScoreManagerEvents.ScoreEventsEnable -= GameOverPanelEnable;
+        ScoreManagerEvents.ScoreEventsDisable -= GameOverPanelDisable;
+
         GameEvents.OnNewGame -= ResetScore;
 
-        UIEvents.UIHandler -= UpdateScoreText;
-        UIEvents.UIHandler -= IncreaseScore;
+
+        UIEvents.UIHandlerUpdate -= UpdateScoreText;
+        UIEvents.UIHandleIncrease -= IncreaseScore;
     }
    
+    private void UnLockNewLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex"))
+        {
+            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel1", +1) + 1);
+            PlayerPrefs.Save();
+        }
+    }
 
+    private void NewLevel()
+    {
+        if(_score == 100)
+        {
+            UnLockNewLevel();
+        }
+    }
 }
