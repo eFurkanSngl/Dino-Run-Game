@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private PlayerMovement _player;
     private Spawner _spawner;
     [SerializeField] private GameObject _gameOverPanel;
+
     
 
     private void Awake()  // Singelton Algortim
@@ -48,12 +49,14 @@ public class GameManager : MonoBehaviour
 
         _player = FindObjectOfType<PlayerMovement>();
         _spawner = FindObjectOfType<Spawner>();
+        
      
         NewGame();
     }
 
     public void NewGame()
     {
+
         Obstacle[] obstacles = FindObjectsOfType<Obstacle>();
 
         foreach (var obstacle in obstacles)
@@ -61,10 +64,9 @@ public class GameManager : MonoBehaviour
             Destroy(obstacle.gameObject);
         }
 
-
         Time.timeScale = 1f;
         _gameSpeed = _initialGameSpeed;   // Start game speed = InitialGameSpeed
-        
+
         _spawner.gameObject.SetActive(true);
         _player.gameObject.SetActive(true);
         _gameOverPanel.SetActive(false);
@@ -76,13 +78,12 @@ public class GameManager : MonoBehaviour
     
     public void GameOver()
     {
-        
+
         _gameSpeed = 0;
         _gameSpeedIncrease = 0;
         
-
-        _spawner.gameObject.SetActive(false);
-       
+        //_spawner.gameObject.SetActive(false);
+       Time.timeScale = 0f;
         _player.gameObject.SetActive(false);
 
         ScoreManagerEvents.ScoreEventsEnable?.Invoke();

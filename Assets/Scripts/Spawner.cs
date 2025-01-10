@@ -14,15 +14,15 @@ public class Spawner : MonoBehaviour
     
    [SerializeField]private List<Obstacle> obstacles = new List<Obstacle>();
     [SerializeField] private List<GameObject> _obstaclePrefabs;
+
     private WaitForSeconds _wait;
     private Coroutine _spawnRoutine;
 
     private float _currentSpawnDelay;
-    private float _minSpawnDelay = 1f;
+    private float _minSpawnDelay = 1.30f;
     private float _spawnSpeedIncrease = 0.10f;
     private float _initialSpawnDelay = 5f;
-    private bool _isRestart = false;
-  
+ 
     
 
     private void Start()
@@ -70,6 +70,10 @@ public class Spawner : MonoBehaviour
             {
                 _currentSpawnDelay -= _spawnSpeedIncrease;
             }
+            else if (_currentSpawnDelay <= _minSpawnDelay)
+            {
+                _currentSpawnDelay = _minSpawnDelay;
+            }
 
             SpawnObstacle();
             _wait = new WaitForSeconds(_currentSpawnDelay);
@@ -102,7 +106,7 @@ public class Spawner : MonoBehaviour
 
     private int GetRandomPrefabIndex()
     {
-        if (GameManager.Instance.GameSpeed >= 5 || GameManager.Instance.GameSpeed <=8)
+        if (GameManager.Instance.GameSpeed >= 5 && GameManager.Instance.GameSpeed <=8)
         {
             // Ýlk 4 prefab arasýndan rastgele seçim yap
             return UnityEngine.Random.Range(0,2);
