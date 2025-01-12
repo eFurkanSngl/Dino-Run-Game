@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     {
 
         _gameSpeed = 0;
-        _gameSpeedIncrease = 0;
+       
         
         //_spawner.gameObject.SetActive(false);
        Time.timeScale = 0f;
