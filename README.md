@@ -9,7 +9,7 @@ Used Tools: Odin Inspector, DoTween.
 
 Our game has 5 language options: German, Portuguese, English, Turkish, Spanish language options are available
 
-You Can Click the Link to Play the Game: http://localhost:64847/
+You Can Click the Link to Play the Game: 
 
 ![Screenshot 2025-02-05 170040](https://github.com/user-attachments/assets/a65bf4ef-ce51-4979-b7c7-b014a938e9be)
 ![Screenshot 2025-02-05 170047](https://github.com/user-attachments/assets/e3c9b813-1a21-44df-aee5-8b1960662808)
